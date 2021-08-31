@@ -74,7 +74,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url('link/edit/0'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url('link/nuevo'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nuevo</p>
                 </a>

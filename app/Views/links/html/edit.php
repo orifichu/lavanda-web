@@ -37,7 +37,7 @@
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Inicio</a></li>
                   <li class="breadcrumb-item"><a href="<?php echo base_url('links'); ?>">Enlaces de interés</a></li>
-                  <li class="breadcrumb-item active"><?php echo $link->titulo; ?></li>
+                  <li class="breadcrumb-item active"><?php echo ($link==null)?'Nuevo':$link->titulo; ?></li>
                 </ol>
               </div>
             </div>
@@ -56,23 +56,43 @@
                     <h3 class="card-title">Datos</h3>
                   </div>
                   <!-- /.card-header -->
+
+                  <?php
+                  $action='';
+                  $item_id     = 0;
+                  $item_titulo = '';
+                  $item_url    = '';
+                  if ( $link==null ) {
+                    $action = base_url('link/insertar');
+
+                    $item_id = 0;
+                  } else {
+                    $action = base_url('link/guardar');
+
+                    $item_id     = $link->id_link;
+                    $item_titulo = $link->titulo;
+                    $item_url    = $link->url;
+                  }
+                  ?>
+
                   <!-- form start -->
-                  <form id="form-link" action="<?php echo base_url('link/guardar'); ?>" method="post" enctype="multipart/form-data">
-			              <input type="hidden" name="id_link" value="<?php echo $link->id_link;?>" />
+                  <form id="form-link" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+			              <input type="hidden" name="id_link" value="<?php echo $item_id;?>" />
                     <div class="card-body">
                       <div class="form-group">
                         <label for="titulo">Titulo</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo" value="<?php echo $link->titulo; ?>" />
+                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo" value="<?php echo $item_titulo; ?>" />
                       </div>
                       <div class="form-group">
                         <label for="url">Url</label>
-                        <input type="text" class="form-control" id="url" name="url" placeholder="Url" value="<?php echo urldecode($link->url); ?>" />
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Url" value="<?php echo urldecode($item_url); ?>" />
                       </div>
                     </div>
                     <!-- /.card-body -->
                     
                     <div class="card-footer">
                       <button type="submit" class="btn btn-primary" id="guardar">Guardar</button>
+                      <a href='<?php echo base_url('link'); ?>' class='btn btn-primary'>&#60 Volver</a>
                     </div>
                   </form>
                 </div>

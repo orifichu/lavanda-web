@@ -48,6 +48,20 @@ class LinkModel extends Model
 		return $eventData['data'];
     }
 
+    public function insertar($data)
+    {
+        //beforeUpdate
+
+        //main event
+        $eventData = [
+			'data'      => $this->doInsertar($data),
+		];
+
+        //afterUpdate
+
+		return $eventData['data'];
+    }
+
     public function guardar($id_link, $data)
     {
         //beforeUpdate
@@ -83,6 +97,30 @@ class LinkModel extends Model
         return $result;
     }
 
+    protected function doInsertar($data)
+	{
+        $this->data = $data;
+
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->prepare(function($db)
+        {
+            return $db->table($this->table)
+                    ->insert($this->data);
+        });
+
+        // Run the Query
+        //echo $pQuery->getQueryString();exit();
+        //$result = $pQuery->execute();
+        $result = call_user_func_array(array($pQuery, "execute"), $this->data);
+
+        //posibles $result a usar
+        //ber "guardar" function
+
+        return $result;
+    }
+
     protected function doGuardar($id_link, $data)
 	{
         //extract($data);
@@ -104,7 +142,7 @@ class LinkModel extends Model
         //echo $pQuery->getQueryString();exit();
         $result = $pQuery->execute($id_link);
 
-        //posibles $result a suar
+        //posibles $result a usar
         //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
         //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
 
