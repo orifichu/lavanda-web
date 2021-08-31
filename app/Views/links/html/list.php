@@ -20,97 +20,120 @@
 <?php echo $this->endSection() ?>
 
 <?php echo $this->section('content') ?>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1><?php echo $h1; ?></h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Inicio</a></li>
-              <li class="breadcrumb-item active"><?php echo $h1; ?></li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+<div class="wrapper">
+    <!-- Navbar -->
+    <?php echo $this->include('backend-nav'); ?>
+    <!-- /.navbar -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title"><?php echo $descripcion; ?></h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="links" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Nro</th>
-                    <th>Título</th>
-                    <th>Url</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <?php
-                  $base_url = base_url('link');
-                  $i=0;
-                  $estado='';
-                  foreach ($links as $link)
-                  {
-                    $i++;
-                    if ($link->esta_activo == 0) {
-                      $estado='INACTIVO';
-                    } else {$estado='ACTIVO';}
-                    echo "<tr>";
-                    echo "<td>{$i}</td>";
-                    echo "<td>{$link->titulo}</td>";
-                    echo "<td>{$link->url}</td>";
-                    echo "<td>{$estado}</td>";
-                    echo "<td>
-                    <div class='btn-group'>
-                        <a href='{$base_url}/ver/{$link->id_link}' class='btn btn-primary'>&nbsp;&nbsp;Ver&nbsp;&nbsp;</a>
-                        <a href='{$base_url}/editar/{$link->id_link}' class='btn btn-warning'>Editar</a>
-                        <a href='{$base_url}/anular/{$link->id_link}' class='btn btn-danger'>Anular</a>
-                      </div>
-                    </td>";
-                    echo "</tr>";
-                  }
-                  ?>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Nro</th>
-                    <th>Título</th>
-                    <th>Url</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
+    <!-- Main Sidebar Container -->
+    <?php echo $this->include('backend-sidebar', array($menu, $submenu)); ?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><?php echo $h1; ?></h1>
             </div>
-            <!-- /.card -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Inicio</a></li>
+                <li class="breadcrumb-item active"><?php echo $h1; ?></li>
+              </ol>
+            </div>
           </div>
-          <!-- /.col -->
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title"><?php echo $descripcion; ?></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="links" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Nro</th>
+                      <th>Título</th>
+                      <th>Url</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $base_url = base_url('link');
+                    $i=0;
+                    $estado='';
+                    $botones = '';
+                    foreach ($links as $link)
+                    {
+                      $i++;
+                      if ($link->esta_activo == 0) {
+                        $estado='INACTIVO';
+                      } else {
+                        $estado='ACTIVO';
+                        $botones = "
+                        <a href='{$base_url}/editar/{$link->id_link}' class='btn btn-warning'>Editar</a>
+                        <a href='{$base_url}/anular/{$link->id_link}' class='anular btn btn-danger'>Anular</a>
+                        ";
+                      }
+
+                      echo "<tr>";
+                      echo "<td>{$i}</td>";
+                      echo "<td>{$link->titulo}</td>";
+                      echo "<td>".urldecode($link->url)."</td>";
+                      echo "<td>{$estado}</td>";
+                      echo "<td>
+                      <div class='btn-group'>
+                          <a href='{$base_url}/ver/{$link->id_link}' class='btn btn-primary'>&nbsp;&nbsp;Ver&nbsp;&nbsp;</a>
+                          {$botones}
+                        </div>
+                      </td>";
+                      echo "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Nro</th>
+                      <th>Título</th>
+                      <th>Url</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <?php echo $this->include('backend-footer'); ?>
+
+    <!-- Control Sidebar -->
+    <?php echo $this->include('backend-control-sidebar'); ?>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 <?php echo $this->endSection() ?>
 
 <?php echo $this->section('script') ?>
@@ -153,6 +176,14 @@
       "autoWidth": false,
       "responsive": true,
     });*/
+  });
+
+  $( "a.anular" ).click(function() {
+    var r = confirm("¿Seguro que desea realizar la anulación?");
+    if (r == true) {
+    } else {
+      return false;
+    }
   });
 </script>
 <?php echo $this->endSection() ?>

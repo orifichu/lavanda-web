@@ -23,7 +23,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $baseURL = 'http://localhost/lavanda/public/';
+	public $baseURL = 'http://localhost/lavanda-web/public/';
 
 	/**
 	 * --------------------------------------------------------------------------

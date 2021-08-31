@@ -101,7 +101,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		}
 
 		$this->query = $query;
-
+		
 		return $this->_prepare($query->getOriginalQuery(), $options);
 	}
 

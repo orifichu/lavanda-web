@@ -65,7 +65,7 @@
           </li>
           <li class="nav-header">MANTENIMIENTO</li>
           <li class="nav-item menu-open">
-            <a href="<?php echo base_url('link'); ?>" class="nav-link active">
+            <a href="<?php echo base_url('link'); ?>" class="nav-link <?php echo ($menu == 'links') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-link"></i>
               <p>
                 Enlaces de interés
@@ -74,13 +74,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url('link/edit/0'); ?>" class="nav-link">
+                <a href="<?php echo base_url('link/edit/0'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nuevo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url('link'); ?>" class="nav-link active">
+                <a href="<?php echo base_url('link'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'listado') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado</p>
                 </a>
