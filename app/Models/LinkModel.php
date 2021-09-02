@@ -48,6 +48,36 @@ class LinkModel extends Model
 		return $eventData['data'];
     }
 
+    public function restlistarTodo()
+    {
+        //beforeFind
+
+        //main event
+        $eventData = [
+			'data'      => $this->doRestListarTodo(),
+		];
+
+        //afterFind
+
+		return $eventData['data'];
+    }
+
+    protected function doRestListarTodo()
+	{
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->table($this->table)
+                    ->select('titulo, url')
+                    ->where('esta_activo', 1)
+                    ->get();
+
+        // Run the Query
+        $result = $pQuery->getResult();
+
+        return $result;
+    }
+
     public function insertar($data)
     {
         //beforeUpdate
