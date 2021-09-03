@@ -492,24 +492,6 @@ CREATE TABLE `juzgados`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Table structure for links
--- ----------------------------
-DROP TABLE IF EXISTS `links`;
-CREATE TABLE `links`  (
-  `id_link` bigint(255) NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `url` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `esta_activo` bit(1) NOT NULL,
-  PRIMARY KEY (`id_link`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of links
--- ----------------------------
-INSERT INTO `links` VALUES (1, 'YouTube', 'http://youtube.com', b'1');
-INSERT INTO `links` VALUES (2, 'Facebook', 'http://facebook.com', b'1');
-
--- ----------------------------
 -- Table structure for perfiles
 -- ----------------------------
 DROP TABLE IF EXISTS `perfiles`;
