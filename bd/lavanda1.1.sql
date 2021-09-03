@@ -461,6 +461,7 @@ CREATE TABLE IF NOT EXISTS `juzgados` (
   `nombre_juzgado` varchar(200) NOT NULL DEFAULT '',
   `centro_poblado` varchar(100) NOT NULL DEFAULT '',
   `competencia_territorial` text NOT NULL,
+  `esta_activo` tinyint(4) NOT NULL,
   PRIMARY KEY (`id_juzgado`),
   KEY `tipo` (`id_tipo`),
   KEY `distrito` (`id_distrito`)
