@@ -110,6 +110,30 @@
               </li>
             </ul>
           </li>
+          <!-- Personas -->
+          <li class="nav-item">
+            <a href="<?php echo base_url('personas'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Personas
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url('persona/nuevo'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Nuevo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('persona'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'listado') ? 'active' : ''; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

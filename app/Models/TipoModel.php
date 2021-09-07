@@ -12,12 +12,12 @@ class TipoModel extends Model
     protected $returnType = 'object';
 
     /*Consultas para listar combos box*/
-    public function listarTipos()
+    public function listarTipos($id_padre)
     {
         //beforeFind
 
         //main event
-        $eventData = ['data' => $this->doListarTipos(1)];
+        $eventData = ['data' => $this->doListarTipos($id_padre)];
 
         //afterFind
 

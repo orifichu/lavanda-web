@@ -27,7 +27,7 @@ class Juzgado extends BaseController
         $data = [
             'titulo' => 'Lavanda | Lista de Juzgados',
             'h1' => 'Lista Juzgados',
-            'descripcion' => 'Jueces de Juzgados de Paz',
+            'descripcion' => 'Lista de Juzgados de Paz',
             'menu'        => 'links',
             'submenu'     => 'listado',
             'juzgados'       => $juzgados
@@ -43,7 +43,7 @@ class Juzgado extends BaseController
 		$juzgados = null;
 		// $provinciaModel = model('App\Models\ProvinciaModel', false, $this->db);
 		$provincias = $provinciaModel->listarProvincias();
-		$tipos = $tipoModel->listarTipos();
+		$tipos = $tipoModel->listarTipos(1);
         $data = [
             'titulo' => 'Lavanda | Nuevo juzgado',
             'h1' => 'Nuevo juzgado',

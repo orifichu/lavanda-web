@@ -20,33 +20,33 @@ class PersonaModel extends Model
 		parent::__construct();
 	}
 
-    public function query()
-    {
-        //beforeFind
+  //   public function query()
+  //   {
+  //       //beforeFind
 
-        //main event
-        $eventData = [
-			'data'      => $this->doQuery(),
-		];
+  //       //main event
+  //       $eventData = [
+		// 	'data'      => $this->doQuery(),
+		// ];
 
-        //afterFind
+  //       //afterFind
 
-		return $eventData['data'];
-    }
+		// return $eventData['data'];
+  //   }
 
-    public function listarTodo()
-    {
-        //beforeFind
+  //   public function listarTodo()
+  //   {
+  //       //beforeFind
 
-        //main event
-        $eventData = [
-			'data'      => $this->doListarTodo(),
-		];
+  //       //main event
+  //       $eventData = [
+		// 	'data'      => $this->doListarTodo(),
+		// ];
 
-        //afterFind
+  //       //afterFind
 
-		return $eventData['data'];
-    }
+		// return $eventData['data'];
+  //   }
 
     public function restlistarTodo()
     {
@@ -178,48 +178,30 @@ class PersonaModel extends Model
         return $result;
     }
 
-    public function insertar($data)
+    /*Lista de juzgados*/
+    public function listarPersonas()
     {
-        //beforeUpdate
+        //beforeFind
 
         //main event
         $eventData = [
-			'data'      => $this->doInsertar($data),
-		];
+            'data' => $this->doListarPersonas(),
+        ];
 
-        //afterUpdate
+        //afterFind
 
-		return $eventData['data'];
+        return $eventData['data'];
     }
 
-    public function guardar($id_link, $data)
+    protected function doListarPersonas()
     {
-        //beforeUpdate
-
-        //main event
-        $eventData = [
-			'data'      => $this->doGuardar($id_link, $data),
-		];
-
-        //afterUpdate
-
-		return $eventData['data'];
-    }
-
-    protected function doQuery()
-	{
         $db = $this->db();
 
-        return $db->query("select * from {$this->table}")
-			->getResult();
-    }
-
-    protected function doListarTodo()
-	{
-        $db = $this->db();
-
-        // Prepare the Query
-        $pQuery = $db->table($this->table)->get();
+        // $pQuery = $db->table('juzgados')
+        $pQuery = $db->table($this->table)
+                    ->join('tipos', 'tipos.id_tipo = personas.id_cargo')
+                    ->where('esta_activo', 1)
+                    ->get();
 
         // Run the Query
         $result = $pQuery->getResult();
@@ -227,55 +209,104 @@ class PersonaModel extends Model
         return $result;
     }
 
-    protected function doInsertar($data)
-	{
-        $this->data = $data;
+ //    public function insertar($data)
+ //    {
+ //        //beforeUpdate
 
-        $db = $this->db();
+ //        //main event
+ //        $eventData = [
+	// 		'data'      => $this->doInsertar($data),
+	// 	];
 
-        // Prepare the Query
-        $pQuery = $db->prepare(function($db)
-        {
-            return $db->table($this->table)
-                    ->insert($this->data);
-        });
+ //        //afterUpdate
 
-        // Run the Query
-        //echo $pQuery->getQueryString();exit();
-        //$result = $pQuery->execute();
-        $result = call_user_func_array(array($pQuery, "execute"), $this->data);
+	// 	return $eventData['data'];
+ //    }
 
-        //posibles $result a usar
-        //ber "guardar" function
+ //    public function guardar($id_link, $data)
+ //    {
+ //        //beforeUpdate
 
-        return $result;
-    }
+ //        //main event
+ //        $eventData = [
+	// 		'data'      => $this->doGuardar($id_link, $data),
+	// 	];
 
-    protected function doGuardar($id_link, $data)
-	{
-        //extract($data);
-        $this->id_link = $id_link;
-        $this->data    = $data;
+ //        //afterUpdate
 
-        $db = $this->db();
+	// 	return $eventData['data'];
+ //    }
 
-        // Prepare the Query
-        $pQuery = $db->prepare(function($db)
-        {
-            return $db->table($this->table)
-                    ->set($this->data)
-                    ->where($this->primaryKey, '?', false)
-                    ->getCompiledUpdate();
-        });
+ //    protected function doQuery()
+	// {
+ //        $db = $this->db();
 
-        // Run the Query
-        //echo $pQuery->getQueryString();exit();
-        $result = $pQuery->execute($id_link);
+ //        return $db->query("select * from {$this->table}")
+	// 		->getResult();
+ //    }
 
-        //posibles $result a usar
-        //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
-        //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
+ //    protected function doListarTodo()
+	// {
+ //        $db = $this->db();
 
-        return $result;
-    }
+ //        // Prepare the Query
+ //        $pQuery = $db->table($this->table)->get();
+
+ //        // Run the Query
+ //        $result = $pQuery->getResult();
+
+ //        return $result;
+ //    }
+
+ //    protected function doInsertar($data)
+	// {
+ //        $this->data = $data;
+
+ //        $db = $this->db();
+
+ //        // Prepare the Query
+ //        $pQuery = $db->prepare(function($db)
+ //        {
+ //            return $db->table($this->table)
+ //                    ->insert($this->data);
+ //        });
+
+ //        // Run the Query
+ //        //echo $pQuery->getQueryString();exit();
+ //        //$result = $pQuery->execute();
+ //        $result = call_user_func_array(array($pQuery, "execute"), $this->data);
+
+ //        //posibles $result a usar
+ //        //ber "guardar" function
+
+ //        return $result;
+ //    }
+
+ //    protected function doGuardar($id_link, $data)
+	// {
+ //        //extract($data);
+ //        $this->id_link = $id_link;
+ //        $this->data    = $data;
+
+ //        $db = $this->db();
+
+ //        // Prepare the Query
+ //        $pQuery = $db->prepare(function($db)
+ //        {
+ //            return $db->table($this->table)
+ //                    ->set($this->data)
+ //                    ->where($this->primaryKey, '?', false)
+ //                    ->getCompiledUpdate();
+ //        });
+
+ //        // Run the Query
+ //        //echo $pQuery->getQueryString();exit();
+ //        $result = $pQuery->execute($id_link);
+
+ //        //posibles $result a usar
+ //        //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
+ //        //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
+
+ //        return $result;
+ //    }
 }
