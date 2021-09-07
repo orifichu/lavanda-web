@@ -89,12 +89,12 @@
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="titulo">Nombre Juzgado</label>
-                              <input type="text" class="form-control" id="nombreJuzgado" name="nombreJuzgado" placeholder="Nombre Juzgado" data-toggle="tooltip" value="<?php echo $item_nombre_juzgado; ?>"/>
+                              <label for="titulo">Nombres Completos</label>
+                              <input type="text" class="form-control" id="txtxNombres" name="txtxNombres" placeholder="Nombre Completos" data-toggle="tooltip" value="<?php echo $item_nombre_juzgado; ?>"/>
                             </div>
                             <div class="form-group">
-                              <label for="url">Centro Poblado</label>
-                              <input type="text" class="form-control" id="centroPoblado" name="centroPoblado" placeholder="Centro Poblado" data-toggle="tooltip" value="<?php echo $item_centro_poblado; ?>" />
+                              <label for="url">Apellidos Completos</label>
+                              <input type="text" class="form-control" id="txtApellidos" name="txtApellidos" placeholder="Apellidos Completos" data-toggle="tooltip" value="<?php echo $item_centro_poblado; ?>" />
                             </div>
                             <div class="form-group">
                               <label for="url">Tipo</label>
