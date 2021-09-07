@@ -338,7 +338,7 @@ class JuzgadoModel extends Model
 
         // Run the Query
         //echo $pQuery->getQueryString();exit();
-        $result = $pQuery->execute($id_link);
+        // $result = $pQuery->execute($id_link);
 
         //posibles $result a usar
         //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
