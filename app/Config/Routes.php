@@ -41,6 +41,11 @@ $routes->get('/', 'Link::index');
  */
 
 $routes->get('links', 'RestLink::index');
+$routes->get('juzgados/JPNL', 'RestJuzgado::listarJPNL');
+$routes->get('juzgados/JPNLPorId/(:segment)', 'RestJuzgado::listarPorId/$1');
+$routes->get('personas/PorId/(:segment)', 'RestPersona::listarPorId/$1');
+$routes->get('personas/PorJuzgado/(:segment)', 'RestPersona::listarPorJuzgado/$1');
+$routes->get('sedes', 'RestSede::index');
 
 /*
  * --------------------------------------------------------------------
