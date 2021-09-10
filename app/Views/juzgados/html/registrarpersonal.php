@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="<?php echo base_url('assets'); ?>/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url('assets'); ?>/dist/css/adminlte.min.css">
+  <!-- Select2 style -->
+  <link rel="stylesheet" href="<?php echo base_url('assets'); ?>/plugins/select2/css/select2.min.css">
 </head>
 <?php echo $this->endSection() ?>
 
@@ -36,8 +38,9 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Inicio</a></li>
-                  <li class="breadcrumb-item"><a href="<?php echo base_url('link'); ?>">Enlaces de interés</a></li>
-                  <li class="breadcrumb-item active"><?php echo ($link==null)?'Nuevo':$link->titulo; ?></li>
+                  <li class="breadcrumb-item"><a href="<?php echo base_url('juzgado'); ?>">Juzgados</a></li>
+                  <li class="breadcrumb-item"><a href="<?php echo base_url('juzgado/personal/'.$juzgado->id_juzgado); ?>">Personal de juzgado</a></li>
+                  <li class="breadcrumb-item active">Nuevo</li>
                 </ol>
               </div>
             </div>
@@ -49,7 +52,7 @@
           <div class="container-fluid">
             <div class="row">
               <!-- left column -->
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
@@ -58,41 +61,37 @@
                   <!-- /.card-header -->
 
                   <?php
-                  $action='';
-                  $item_id     = 0;
-                  $item_titulo = '';
-                  $item_url    = '';
-                  if ( $link==null ) {
-                    $action = base_url('link/insertar');
-
-                    $item_id = 0;
-                  } else {
-                    $action = base_url('link/guardar');
-
-                    $item_id     = $link->id_link;
-                    $item_titulo = $link->titulo;
-                    $item_url    = $link->url;
-                  }
+                  $action = base_url('juzgado/insertarpersonal');
                   ?>
 
                   <!-- form start -->
-                  <form id="form-link" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-			              <input type="hidden" name="id_link" value="<?php echo $item_id;?>" />
+                  <form id="frmJuzgadoPersonal" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id_juzgado" value="<?php echo $juzgado->id_juzgado;?>" />
                     <div class="card-body">
-                      <div class="form-group">
-                        <label for="titulo">Titulo</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo" value="<?php echo $item_titulo; ?>" />
-                      </div>
-                      <div class="form-group">
-                        <label for="url">Url</label>
-                        <input type="text" class="form-control" id="url" name="url" placeholder="Url" value="<?php echo urldecode($item_url); ?>" />
-                      </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="id_persona">Persona</label>
+                              <select id="id_persona" name="id_persona" class="form-control" data-toggle="tooltip">
+                                <option value="0">Seleccione una persona</option>
+                                <?php  foreach ($personas as $persona): ?>
+                                <option value="<?php echo $persona->id_persona;?>"><?php echo $persona->apellidos_persona . ' ' . $persona->nombres_persona; ?></option>
+                                <?php endforeach; ?> 
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                          </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
-                    
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-primary" id="guardar">Guardar</button>
-                      <a href='<?php echo base_url('link'); ?>' class='btn btn-primary'>&#60 Volver</a>
+                      <div class="col-md-10 row m-auto">
+                        <div class="col-md-3 m-auto">
+                          <button type="submit" class="btn btn-primary" id="guardar"><i class="fas fa-save"></i> Guardar</button>
+                          <a href='<?php echo base_url('juzgado/personal/'.$juzgado->id_juzgado); ?>' class='btn btn-primary'><i class="fas fa-angle-double-left"></i> Volver</a>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -101,10 +100,6 @@
               <!--/.col (left) -->
 
               <!-- right column -->
-              <div class="col-md-6">
-                
-
-              </div>
               <!--/.col (right) -->
             </div>
             <!-- /.row -->
@@ -133,36 +128,46 @@
 <script src="<?php echo base_url('assets'); ?>/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url('assets'); ?>/dist/js/demo.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url('assets'); ?>/plugins/select2/js/select2.min.js"></script>
 <!-- Page specific script -->
 
 <script>
-$( "button#guardar" ).click(function() {
-  //validación de formulario
-  var need_exit = false;
-
-  $("input#titulo").each(function(){
-    if ($.trim(this.value) == "") {
-      alert("El título del enlace no puede estar vacío.");
-      $( this ).focus();
-      need_exit = true;
-      return false;
-    }
+  $(document).ready(() => {
+    //Initialize Select2 Elements
+    $('.select2').select2();
   });
 
-  if (need_exit) return false;
-
-  $("input#url").each(function(){
-    if ($.trim(this.value) == "" ) {
-      alert("El url del enlace no puede estar vací­o.");
-      $( this ).focus();
-      need_exit = true;
+  function pulsar(e) {
+    if (e.which === 13 && !e.shiftKey) {
+      e.preventDefault();
+      console.log('prevented');
       return false;
     }
+  }
+
+  $( "button#guardar" ).click(function() {
+    // //validación de formulario
+    correcto = true;
+
+    var id_persona = $('#id_persona').val();
+
+    if (id_persona == 0) {
+        correcto = false;
+        msj = "Seleccione un tipo de juzgado";
+        $('#id_persona').css('border-color', 'red');
+        $('#id_persona').attr("data-original-title",msj);
+    } else {
+        $('#id_persona').css('border-color', '');
+        $('#id_persona').attr("data-original-title",'');
+    }
+
+    if(correcto){
+      $("#frmJuzgadoPersonal").submit();
+    } else {
+      return false;
+    }
+
   });
-
-  if (need_exit) return false;
-
-  $("#form-link").submit();
-});
 </script>
 <?php echo $this->endSection() ?>

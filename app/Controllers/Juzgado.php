@@ -4,33 +4,17 @@ namespace App\Controllers;
 
 class Juzgado extends BaseController
 {
-	// public function index()
-	// {
-	// 	$juzgadoModel = model('App\Models\InstanciaModel', false, $this->db);
-	// 	$juzgados = $juzgadoModel->findAll();
- //        $data = [
- //            'titulo' => 'Lavanda | Lista de Juzgados',
- //            'h1' => 'Lista Juzgados',
- //            'descripcion' => 'Jueces de Juzgados de Paz',
- //            'menu'        => 'links',
- //            'submenu'     => 'listado',
- //            'juzgados'       => $juzgados
- //        ];
-
-	// 	return view('juzgados/html/lista', $data);
-	// }
-
 	public function index()
 	{
 		$juzgadoModel = model('App\Models\JuzgadoModel', false, $this->db);
 		$juzgados = $juzgadoModel->listarJuzgados();
         $data = [
-            'titulo' => 'Lavanda | Lista de Juzgados',
-            'h1' => 'Lista Juzgados',
-            'descripcion' => 'Lista de Juzgados de Paz',
-            'menu'        => 'links',
+            'titulo'      => 'Lavanda | Lista de Juzgados',
+            'h1'          => 'Lista Juzgados',
+            'descripcion' => 'Lista de Juzgados',
+            'menu'        => 'juzgados',
             'submenu'     => 'listado',
-            'juzgados'       => $juzgados
+            'juzgados'    => $juzgados
         ];
 
 		return view('juzgados/html/lista', $data);
@@ -58,6 +42,34 @@ class Juzgado extends BaseController
 		return view('juzgados/html/registrar', $data);
 	}
 
+	public function nuevopersonal($id_juzgado)
+	{
+		$juzgadoModel = model('App\Models\JuzgadoModel', false, $this->db);
+		$personaModel = model('App\Models\PersonaModel', false, $this->db);
+
+		$juzgado  = $juzgadoModel->BusquedaJuzgadoById($id_juzgado);
+		$personal = $personaModel->BusquedaPersonaByJuzgadoId($id_juzgado);
+
+		$data = array();
+		$data[] = 0;
+		foreach ($personal as $persona) {
+			$data[] = $persona->id_persona;
+		}
+
+		$personas = $personaModel->listarPersonasNotIn($data);
+
+        $data = [
+            'titulo'      => 'Lavanda | Nuevo personal',
+            'h1'          => 'Nuevo personal',
+            'descripcion' => '',
+            'menu'        => 'juzgados',
+            'submenu'     => 'nuevopersonal',
+            'juzgado'     => $juzgado,
+            'personas'    => $personas
+        ];
+
+		return view('juzgados/html/registrarpersonal', $data);
+	}
 
     public function listarDistrito($cmbProvincia)
 	{
@@ -72,6 +84,29 @@ class Juzgado extends BaseController
 		endforeach;
 
 		return $html;
+	}
+
+	public function personal($id_juzgado)
+	{
+		$juzgadoModel = model('App\Models\JuzgadoModel', false, $this->db);
+		$personaModel = model('App\Models\PersonaModel', false, $this->db);
+
+		$juzgado  = $juzgadoModel->BusquedaJuzgadoById($id_juzgado);
+		$personal = $personaModel->BusquedaPersonaByJuzgadoId($id_juzgado);
+		
+		$data = [
+            'titulo' => 'Lavanda | Personal de juzgado',
+            'h1' => 'Personal de juzgado',
+            'descripcion' => 'Personal perteneciente al ' . $juzgado->nombre_juzgado,
+            'menu'        => 'juzgados',
+            'submenu'     => 'personal',
+            'juzgado'     => $juzgado,
+            'personal'    => $personal
+        ];
+
+        // var_dump($juzgados);
+
+		return view('juzgados/html/personal', $data);
 	}
 
 	public function insertar()
@@ -102,6 +137,23 @@ class Juzgado extends BaseController
         $result = $juzgadoModel->insertar($data);
 
 		return redirect()->to('/juzgado');
+	}
+
+	public function insertarpersonal()
+	{
+		$id_juzgado  = $this->request->getPost('id_juzgado');
+		$id_persona  = $this->request->getPost('id_persona');
+		
+		$juzgadoModel = model('App\Models\JuzgadoModel', false, $this->db);
+		
+        $data = [
+            'id_juzgado' => $id_juzgado,
+            'id_persona' => $id_persona
+        ];
+
+        $result = $juzgadoModel->insertarpersonal($data);
+
+		return redirect()->to('/juzgado/personal/'.$id_juzgado);
 	}
 
 	public function editar($id_juzgado)
@@ -211,5 +263,20 @@ class Juzgado extends BaseController
         $result = $juzgadoModel->EditarJuzgado($id_juzgado, $data);
 
 		return redirect()->to('/juzgado');
+	}
+
+	public function quitar($id_juzgado, $id_persona)
+	{
+		if ( $id_juzgado==null || $id_juzgado == 0 || $id_persona==null || $id_persona == 0  ){
+            return redirect()->back();
+        }
+
+        $juzgadoModel = model('App\Models\JuzgadoModel', false, $this->db);
+		
+        $data = [ 'esta_activo'  => 0 ];
+
+        $result = $juzgadoModel->eliminarJuzgadoPersonal($id_juzgado, $id_persona);
+
+		return redirect()->to('/juzgado/personal/'.$id_juzgado);
 	}
 }

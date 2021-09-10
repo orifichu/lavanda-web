@@ -40,7 +40,8 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Inicio</a></li>
-                <li class="breadcrumb-item active"><?php echo $h1; ?></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url('juzgado'); ?>">Juzgados</a></li>
+                  <li class="breadcrumb-item active"><?php echo $h1; ?></li>
               </ol>
             </div>
           </div>
@@ -58,6 +59,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div>
+                  <a href='<?php echo base_url('juzgado/nuevopersonal'); ?>/<?php echo $juzgado->id_juzgado; ?>' class='btn btn-primary'>Agregar personal</a>
+                  </div>
                   <table id="personas" class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -71,11 +75,11 @@
                     </thead>
                     <tbody>
                     <?php
-                    $base_url = base_url('persona');
+                    $base_url = base_url('juzgado');
                     $i=0;
                     $estado='';
                     $botones = '';
-                    foreach ($personas as $persona)
+                    foreach ($personal as $persona)
                     {
                       $i++;
                       if ($persona->esta_activo == 0) {
@@ -83,8 +87,7 @@
                       } else {
                         $estado='ACTIVO';
                         $botones = "
-                        <a href='{$base_url}/editar/{$persona->id_persona}' class='btn btn-warning mr-2'>Editar</a>
-                        <a href='{$base_url}/anular/{$persona->id_persona}' class='anular btn btn-danger mr-2'>Anular</a>
+                        <a href='{$base_url}/quitar/{$juzgado->id_juzgado}/{$persona->id_persona}' class='quitar btn btn-danger'>Quitar</a>
                         ";
                       }
 
@@ -96,7 +99,6 @@
                       echo "<td>{$estado}</td>";
                       echo "<td>
                         <div class='btn-group'>
-                          <a href='#' class='btn btn-primary mr-2' onclick='verModal($persona->id_persona)'>Ver</a>
                           {$botones}
                         </div>
                       </td>";
@@ -173,28 +175,13 @@
     }).buttons().container().appendTo('#personas_wrapper .col-md-6:eq(0)');
   });
 
-  $( "a.anular" ).click(function() {
+  $( "a.quitar" ).click(function() {
     
-    var r = confirm("¿Seguro que desea realizar la anulación?");
+    var r = confirm("¿Seguro que desea quitar del juzgado a la persona?");
     if (r == true) {
     } else {
       return false;
     }
   });
-
-  function verModal(id_persona) {
-    listarverModal(id_persona);
-  }
-
-  var listarverModal = function(id_persona) {
-
-    var url = "<?php echo base_url('persona'); ?>/ver/"+id_persona;
-    
-    $.get( url )
-    .done(function(response) {
-      $("#verPersona").html(response);
-      $('#detalle_persona').modal('show');
-    });
-};
 </script>
 <?php echo $this->endSection() ?>

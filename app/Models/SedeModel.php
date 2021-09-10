@@ -77,6 +77,37 @@ class SedeModel extends Model
         return $result;
     }
 
+    public function restlistarPorId($id_sede)
+    {
+        //beforeFind
+
+        //main event
+        $eventData = [
+			'data'      => $this->doRestListarPorId($id_sede),
+		];
+
+        //afterFind
+
+		return $eventData['data'];
+    }
+    
+    protected function doRestListarPorId($id_sede)
+	{
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->table($this->table)
+                    ->select('*')
+                    ->where('id_sede', $id_sede)
+                    ->where('esta_activa', 1)
+                    ->get();
+
+        // Run the Query
+        $result = $pQuery->getResult();
+
+        return $result;
+    }
+
     public function insertar($data)
     {
         //beforeUpdate

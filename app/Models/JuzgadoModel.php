@@ -132,6 +132,39 @@ class JuzgadoModel extends Model
         return $result;
     }
 
+    public function insertarpersonal($data)
+    {
+        //beforeUpdate
+
+        //main event
+        $eventData = [
+            'data'      => $this->doInsertarpersonal($data),
+        ];
+
+        //afterUpdate
+
+        return $eventData['data'];
+    }
+
+    protected function doInsertarpersonal($data)
+    {
+        $this->data = $data;
+
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->prepare(function($db)
+        {
+            return $db->table('juzgadospersonas')
+                    ->insert($this->data);
+        });
+
+        // Run the Query
+        $result = call_user_func_array(array($pQuery, "execute"), $this->data);
+
+        return $result;
+    }
+
     public function restlistarPorId($id_juzgado)
     {
         //beforeFind
@@ -301,7 +334,7 @@ class JuzgadoModel extends Model
         //posibles $result a usar
         //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
         //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
-        $result = $pQuery->execute($txtIdJuzgado);
+
         return $result;
     }
     
@@ -344,6 +377,45 @@ class JuzgadoModel extends Model
         //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
         //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
         $result = $pQuery->execute($txtIdJuzgado);
+
+        return $result;
+    }
+
+    public function eliminarJuzgadoPersonal($id_juzgado, $id_persona) 
+    {
+        //beforeUpdate
+
+        //main event
+        $eventData = [       
+            'data'      => $this->doEliminarJuzgadoPersonal($id_juzgado, $id_persona),
+        ];
+
+        //afterUpdate
+
+        return $eventData['data'];
+    }
+
+    protected function doEliminarJuzgadoPersonal($id_juzgado, $id_persona)
+    {
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->prepare(function($db)
+        {
+            return $db->table('juzgadospersonas')
+                    ->where('id_juzgado', '?', false)
+                    ->where('id_persona', '?', false)
+                    ->getCompiledDelete();
+        });
+
+        // Run the Query
+        //echo $pQuery->getQueryString();exit();
+        // $result = $pQuery->execute($id_link);
+
+        //posibles $result a usar
+        //$result = call_user_func_array(array($pQuery, "execute"), array_values($this->data));
+        //$result = call_user_func_array(array($pQuery, "execute"), $this->data);
+        $result = $pQuery->execute($id_juzgado, $id_persona);
 
         return $result;
     }

@@ -24,6 +24,22 @@ class RestSede extends ResourceController
         return $this->genericResponse($data, $message, $status);
     }
 
+    //listar sede por id
+    public function listarPorId($id_sede)
+    {
+        $data = $this->model->restlistarPorId($id_sede);
+
+        $message = '';
+        $status = '';
+        if (count($data) == 0) {
+            $message = 'No hay datos para mostrar.';
+            $status = 'failed';
+        } else {
+            $status = 'success';
+        }
+        return $this->genericResponse($data, $message, $status);
+    }
+
     private function genericResponse($data, $message, $status)
     {
         if ($status == 'failed') {

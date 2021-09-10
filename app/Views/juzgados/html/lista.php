@@ -85,6 +85,7 @@
                         $estado='ACTIVO';
                         $botones = "
                         <a href='{$base_url}/editar/{$juzgado->id_juzgado}' class='btn btn-warning mr-2'>Editar</a>
+                        <a href='{$base_url}/personal/{$juzgado->id_juzgado}' class='btn btn-info mr-2'>Personal</a>
                         <a href='{$base_url}/anular/{$juzgado->id_juzgado}' class='anular btn btn-danger mr-2'>Anular</a>
                         ";
                       }

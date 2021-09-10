@@ -39,4 +39,34 @@ class TipoModel extends Model
 
         return $result;
     }
+
+    public function listarPorPadre($id_padre)
+    {
+        //beforeFind
+
+        //main event
+        $eventData = [			
+            'data'      => $this->doListarPorPadre($id_padre),
+		];
+
+        //afterFind
+
+		return $eventData['data'];
+    }
+
+    protected function doListarPorPadre($id_padre)
+	{
+        $db = $this->db();
+
+        // Prepare the Query
+        $pQuery = $db->table($this->table)
+                    ->select('*')
+                    ->where('id_padre', $id_padre)
+                    ->orderBy('nombre_tipo', 'ASC')
+                    ->get();
+
+        // Run the Query
+        $result = $pQuery->getResult();
+        return $result;
+    }
 }

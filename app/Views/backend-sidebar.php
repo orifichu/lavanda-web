@@ -63,7 +63,7 @@
             </ul-->
           </li>
           <li class="nav-header">MANTENIMIENTO</li>
-          <li class="nav-item menu-open">
+          <li class="nav-item <?php echo ($menu == 'links') ? 'menu-open' : ''; ?>">
             <a href="<?php echo base_url('link'); ?>" class="nav-link <?php echo ($menu == 'links') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-link"></i>
               <p>
@@ -87,23 +87,23 @@
             </ul>
           </li>
           <!-- Juzgados -->
-          <li class="nav-item">
-            <a href="<?php echo base_url('juzgado'); ?>" class="nav-link">
+          <li class="nav-item <?php echo ($menu == 'juzgados') ? 'menu-open' : ''; ?>">
+            <a href="<?php echo base_url('juzgado'); ?>" class="nav-link <?php echo ($menu == 'juzgados') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-university"></i>
               <p>
-                Juzgados de Paz
+                Juzgados
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url('juzgado/nuevo'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url('juzgado/nuevo'); ?>" class="nav-link <?php echo ($menu == 'juzgados' && $submenu == 'nuevo') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nuevo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url('juzgado'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'listado') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url('juzgado'); ?>" class="nav-link <?php echo ($menu == 'juzgados' && $submenu == 'listado') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado</p>
                 </a>
@@ -111,8 +111,8 @@
             </ul>
           </li>
           <!-- Personas -->
-          <li class="nav-item">
-            <a href="<?php echo base_url('personas'); ?>" class="nav-link">
+          <li class="nav-item <?php echo ($menu == 'personas') ? 'menu-open' : ''; ?>">
+            <a href="<?php echo base_url('personas'); ?>" class="nav-link <?php echo ($menu == 'personas') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Personas
@@ -121,13 +121,37 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url('persona/nuevo'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'nuevo') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url('persona/nuevo'); ?>" class="nav-link <?php echo ($menu == 'personas' && $submenu == 'nuevo') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nuevo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url('persona'); ?>" class="nav-link <?php echo ($menu == 'links' && $submenu == 'listado') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url('persona'); ?>" class="nav-link <?php echo ($menu == 'personas' && $submenu == 'listado') ? 'active' : ''; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Sedes -->
+          <li class="nav-item <?php echo ($menu == 'sedes') ? 'menu-open' : ''; ?>">
+            <a href="<?php echo base_url('sede'); ?>" class="nav-link <?php echo ($menu == 'sedes') ? 'active' : ''; ?>">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                Sedes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url('sede/nuevo'); ?>" class="nav-link <?php echo ($menu == 'sedes' && $submenu == 'nuevo') ? 'active' : ''; ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Nuevo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url('sede'); ?>" class="nav-link <?php echo ($menu == 'sedes' && $submenu == 'listado') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Listado</p>
                 </a>
